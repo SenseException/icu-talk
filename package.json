@@ -1,0 +1,14 @@
+{
+  "name": "talk-icu",
+  "description": "Reveal.js slides of the talk ICU",
+  "version": "1.0.0",
+  "license" : "MIP",
+  "dependencies": {
+    "bower": "1.7.2"
+  },
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/npm/npm.git"
+  }
+}

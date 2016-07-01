@@ -1,0 +1,25 @@
+{
+  "name": "talk-icu",
+  "description": "Reveal.js slides of the talk for ICU",
+  "main": "",
+  "authors": [
+    "Claudio Zizza <claudio@budgegeria.de>"
+  ],
+  "license": "MIP",
+  "keywords": [
+    "talk"
+  ],
+  "dependencies": {
+    "reveal-js": "2.6.2"
+  },
+  "moduleType": [],
+  "homepage": "php.budgegeria.de",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

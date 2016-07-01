@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>International Components for Unicode</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="bower_components/reveal-js/css/reveal.css">
+    <link rel="stylesheet" href="bower_components/reveal-js/css/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="bower_components/reveal-js/lib/css/zenburn.css">
+    <link rel="stylesheet" media="print" href="bower_components/reveal-js/css/print/pdf.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-background="images/map.jpg">
+            <div class="bg"><h2>International Components for Unicode</h2></div>
+        </section>
+
+        <section>
+            Claudio Zizza<br><br>
+            Developer Developer Developer<br>
+            (Currently PHP)<br><br>
+            PHP Snippets: <a target="_blank" href="http://php.budgegeria.de">php.budgegeria.de</a><br><br>
+            Twitter: <a target="_blank" href="https://twitter.com/senseexception">@SenseException</a>
+        </section>
+
+        <section data-background="images/map.jpg">
+
+        </section>
+
+        <section>
+            <img src="images/headbanger.jpg" height="600">
+        </section>
+
+        <section>
+            <img src="images/bridgefail2.jpg" height="600">
+        </section>
+
+        <section>
+            <h2>Mars Climate Orbiter</h2>
+            <img src="images/mars-climate-orbiter.jpg" height="600">
+            <aside class="notes">
+                Satelliten und Orbitmissionen billiger und effizienter machen<br>
+                Die Sonde sollte sich Mars bis auf 160 km nähern und dann ihre Triebwerke zünden<br>
+                Tatsächlich aber 57 km
+                Verwechslung Metrisches System -> Yards
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/shopware.png" width="982" height="580">
+            <aside class="notes">
+                Communication is also important for devs.
+                Wrong format/communication looks less believable or can result in misunderstandings.
+            </aside>
+        </section>
+
+        <section>
+            <h2>Date representation</h2>
+            <img src="images/what.jpg" style="float: right" class="fragment fade-in">
+            <div style="padding: 20px; margin-top: 90px">es_ES: 21/4/16</div>
+            <div style="padding: 20px">en_US: 4/21/16</div>
+        </section>
+
+        <section>
+            <h2>ICU - International Components for Unicode</h2>
+            <a href="http://icu-project.org">icu-project.org</a>
+        </section>
+
+        <section>
+            <h2>ICU</h2>
+            <ul>
+                <li class="fragment fade-in">Open Source Project</li>
+                <li class="fragment fade-in">Unicode and Globalization support (C/C++/Java)</li>
+                <li class="fragment fade-in">Released in 1999</li>
+                <li class="fragment fade-in">Sponsored by IBM and others</li>
+                <li class="fragment fade-in">Current version: ICU 57.1</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Intl-Extension Classes</h2>
+        </section>
+
+<!-- NumberFormatter -->
+
+        <section>
+            <h3>NumberFormatter</h3>
+        </section>
+
+        <section>
+            <h3>Format</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $numberFormatter = new NumberFormatter('de_CH', NumberFormatter::DECIMAL);
+    echo $numberFormatter->format(1000.45);
+
+    $numberFormatter = new NumberFormatter('de_CH', NumberFormatter::CURRENCY);
+    echo $numberFormatter->format(1000.45);
+
+    echo $numberFormatter->getSymbol(NumberFormatter::CURRENCY_SYMBOL);
+            </code></pre>
+
+                1'000.45<br>
+                CHF 1'000.45<br>
+                CHF
+            </div>
+        </section>
+
+        <section>
+            <h3>Parser</h3>
+
+            <div><pre><code class="php">
+                &lt;?php
+
+                $numberFormatter = new NumberFormatter('de_CH', NumberFormatter::DECIMAL);
+                echo $numberFormatter->parse('1\'000.45');
+            </code></pre>
+
+                1000.45
+            </div>
+        </section>
+
+<!-- IntlDateFormatter -->
+
+        <section>
+            <h3>IntlDateFormatter</h3>
+        </section>
+
+        <section>
+            <h3>Date & Time Formatter</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $dateFormatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG,
+        IntlDateFormatter::SHORT);
+
+    $date = new DateTime();
+
+    echo $dateFormatter->format($date) . PHP_EOL;
+    echo $dateFormatter->format(1390252923);
+            </code></pre>
+
+                18 aprile 2016 21:51<br>
+                20 gennaio 2014 22:22
+            </div>
+        </section>
+
+        <section>
+            <h3>Date & Time Parser</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $dateFormatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG,
+        IntlDateFormatter::SHORT);
+
+    echo $dateFormatter->parse('20 gennaio 2014 22:22');
+            </code></pre>
+                1390252920
+
+            </div>
+        </section>
+
+<!-- MessageFormatter -->
+
+        <section>
+            <h3>MessageFormatter</h3>
+        </section>
+
+        <section>
+            <h3>Formatter whole messages</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $text = 'Am {dateval,date,full} waren es {visitor,number,integer} Besucher.';
+
+    $msgDe = new MessageFormatter('de_DE', $text);
+    $msgCh = new MessageFormatter('de_Ch', $text);
+
+    $args = array(
+    'visitor' => 1240000,
+    'dateval' => new DateTime(),
+    );
+
+    echo $msgDe->format($args);
+    echo $msgCh->format($args);
+            </code></pre>
+
+                Am Sonntag, 17. April 2016 waren es 1.240.000 Besucher.<br>
+                Am Sonntag, 17. April 2016 waren es 1'240'000 Besucher.
+            </div>
+        </section>
+
+        <section>
+            <h3>MessageFormatter static</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $text = 'Am {dateval,date,full} waren es {visitor,number,integer} Besucher.';
+
+    $args = array(
+        'visitor' => 1240000,
+        'dateval' => new DateTime(),
+    );
+
+    echo MessageFormatter::formatMessage('de_DE', $text, $args);
+            </code></pre>
+
+                Am Sonntag, 17. April 2016 waren es 1.240.000 Besucher.
+            </div>
+        </section>
+
+        <section>
+            <h3>MessageFormatter</h3>
+
+            <table>
+                <tr><th>Type</th><th>Style</th></tr>
+                <tr><td rowspan="5">number</td><td>(none)</td></tr>
+                <tr><td>integer</td></tr>
+                <tr><td>currency</td></tr>
+                <tr><td>percent</td></tr>
+                <tr><td>(styletext)</td></tr>
+            </table>
+
+            <table>
+                <tr><th>Type</th><th>Style</th></tr>
+                <tr><td rowspan="6">date</td><td>(none)</td></tr>
+                <tr><td>short</td></tr>
+                <tr><td>medium</td></tr>
+                <tr><td>long</td></tr>
+                <tr><td>full</td></tr>
+                <tr><td>(styletext)</td></tr>
+            </table>
+
+            <table>
+                <tr><th>Type</th><th>Style</th></tr>
+                <tr><td rowspan="6">time</td><td>(none)</td></tr>
+                <tr><td>short</td></tr>
+                <tr><td>medium</td></tr>
+                <tr><td>long</td></tr>
+                <tr><td>full</td></tr>
+                <tr><td>(styletext)</td></tr>
+
+            </table>
+
+            <table>
+                <tr><th>Type</th><th>Style</th></tr>
+                <tr><td>spellout</td><td></td></tr>
+                <tr><td>ordinal</td><td></td></tr>
+                <tr><td>duration</td><td></td></tr>
+            </table>
+        </section>
+
+<!-- IntlCalendar -->
+
+        <section>
+            <h3>IntlCalendar</h3>
+        </section>
+
+        <section>
+            <h3>Calendar information</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $calendar = IntlCalendar::createInstance('Europe/Berlin', 'de_DE');
+
+    var_dump(
+        $calendar->getTime(),
+        $calendar->getType(),
+        $calendar->isWeekend(),
+        $calendar->get(IntlCalendar::FIELD_YEAR),
+        $calendar->inDaylightTime()
+    );
+            </code></pre>
+
+                1461093920108<br>gregorian<br>false<br>2016<br>true
+            </div>
+        </section>
+
+        <section>
+            <h3>Build a Calendar</h3>
+
+            <table class="calendar"><caption>April</caption><tr><td>Mo.</td><td>Di.</td><td>Mi.</td><td>Do.</td><td>Fr.</td><td>Sa.</td><td>So.</td></tr><tr><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">31</td><td align="right">1</td><td align="right">2</td><td align="right">3</td></tr><tr><td align="right">4</td><td align="right">5</td><td align="right">6</td><td align="right">7</td><td align="right">8</td><td align="right">9</td><td align="right">10</td></tr><tr><td align="right">11</td><td align="right">12</td><td align="right">13</td><td align="right">14</td><td align="right">15</td><td align="right">16</td><td align="right">17</td></tr><tr><td align="right">18</td><td align="right">19</td><td align="right">20</td><td align="right">21</td><td align="right">22</td><td align="right">23</td><td align="right">24</td></tr><tr><td align="right">25</td><td align="right">26</td><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">1</td></tr></table>
+            <table class="calendar"><caption>April</caption><tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr><tr><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">31</td><td align="right">1</td><td align="right">2</td></tr><tr><td align="right">3</td><td align="right">4</td><td align="right">5</td><td align="right">6</td><td align="right">7</td><td align="right">8</td><td align="right">9</td></tr><tr><td align="right">10</td><td align="right">11</td><td align="right">12</td><td align="right">13</td><td align="right">14</td><td align="right">15</td><td align="right">16</td></tr><tr><td align="right">17</td><td align="right">18</td><td align="right">19</td><td align="right">20</td><td align="right">21</td><td align="right">22</td><td align="right">23</td></tr><tr><td align="right">24</td><td align="right">25</td><td align="right">26</td><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td></tr></table>
+        </section>
+
+<!-- IntlTimeZone -->
+
+        <section>
+            <h3>IntlTimeZone</h3>
+        </section>
+
+        <section>
+            <h3>TimeZone</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $timezone = IntlTimeZone::createTimeZone('Europe/Berlin');
+    $timezone2 = IntlTimeZone::createTimeZone('Europe/Paris');
+
+    var_dump(
+        $timezone->getDisplayName(),
+        $timezone->hasSameRules($timezone2),
+        $timezone->useDaylightTime(),
+        $timezone->getRawOffset()
+    );
+            </code></pre>
+
+                Central European Standard Time<br>
+                false<br>
+                true<br>
+                3600000<br>
+            </div>
+        </section>
+
+        <section>
+            Good talk about timezones by Andreas Heigl:
+            <a target="_blank" href="http://rawgit.com/heiglandreas/slidedeck/master/time_is_an_illusion/20160519-phpugffm/index_online.html">time is an illusion</a>
+        </section>
+
+<!-- Locale -->
+
+        <section>
+            <h3>Locale</h3>
+        </section>
+
+        <section>
+            <h3>Locale</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    var_dump(Locale::getDefault());
+
+    Locale::setDefault('de_DE');
+
+    var_dump(Locale::getDefault());
+            </code></pre>
+
+                en_US_POSIX<br>de_DE
+            </div>
+        </section>
+
+        <section>
+            <h3>Locale's Region</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    var_dump(
+        Locale::getDisplayRegion('de_DE', 'de'),
+        Locale::getDisplayRegion('de_DE', 'it'),
+        Locale::getDisplayRegion('de_DE', 'en')
+    );
+            </code></pre>
+
+                Deutschland<br>Germania<br>Germany
+            </div>
+        </section>
+
+        <section>
+            <h3>Locale's Language</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    var_dump(
+        Locale::getDisplayLanguage('de_DE', 'de'),
+        Locale::getDisplayLanguage('de_DE', 'it'),
+        Locale::getDisplayLanguage('de_DE', 'en')
+    );
+            </code></pre>
+
+                Deutsch<br>tedesco<br>German
+            </div>
+        </section>
+
+<!-- Spoofchecker -->
+
+        <section>
+            <h3>Spoofchecker</h3>
+        </section>
+
+        <section>
+            <h3>Can I misread it?</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $spoof = new Spoofchecker();
+
+    // are strings visually confusable?
+    var_dump(
+        $spoof->areConfusable("Körner", "Körner\0"),
+        $spoof->areConfusable("Körner", "Korner"),
+        $spoof->areConfusable('lol', '1o1'),
+        $spoof->areConfusable('lol', 'IoI')
+    );
+            </code></pre>
+
+                false<br>
+                false<br>
+                true<br>
+                true
+            </div>
+        </section>
+
+<!-- UConverter -->
+
+        <section>
+            <h3>UConverter</h3>
+        </section>
+
+        <section>
+            <h3>Character Encoding</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $uconv = new UConverter('UTF-8', 'latin-1');
+    echo $uconv->convert('coraz�n');
+
+    echo UConverter::transcode('coraz�n', 'UTF-8', 'latin-1');
+            </code></pre>
+
+                corazón<br>
+                corazón
+            </div>
+        </section>
+
+        <section>
+            <h2>"Hochdörfer" won't be a problem anymore</h2>
+        </section>
+
+<!-- IntlBreakIterator -->
+
+        <section>
+            <h3>IntlBreakIterator / IntlIterator</h3>
+        </section>
+
+        <section>
+            <h3>IntlBreakIterator</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $text = "Si contano i danni. A Pescara, ".
+    "1.500 sfollati per l'esondazione del Fosso Vallelunga. ".
+    "Dall'inizio dell'anno l'agricoltura ha subito un miliardo ".
+    "di euro di danni.";
+
+    $i = IntlBreakIterator::createSentenceInstance('it_IT');
+    $i->setText($text);
+
+    foreach($i->getPartsIterator() as $sentence) {
+        echo $sentence . PHP_EOL . '----- next -----' .  PHP_EOL;
+    }
+            </code></pre>
+
+                Si contano i danni.<br>
+                ----- next -----<br>
+                A Pescara, 1.500 sfollati per l'esondazione del Fosso Vallelunga.<br>
+                ----- next -----<br>
+                Dall'inizio dell'anno l'agricoltura ha subito un miliardo di euro di danni.<br>
+                ----- next -----
+            </div>
+        </section>
+
+<!-- sorting Collator -->
+
+        <section>
+            <h3>Collator</h3>
+        </section>
+
+        <section>
+            <h3>Sorting</h3>
+            <div><pre><code class="php">
+    &lt;?php
+
+    $array = array('a', 'g', 'A', 'ß', 'ä', 'j', 'z');
+
+    sort($array);
+            </code></pre>
+
+            sort = A,a,g,j,z,ß,ä
+            </div>
+        </section>
+
+        <section>
+            <h3>Sorting with Collator</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $array = array('a', 'g', 'A', 'ß', 'ä', 'j', 'z');
+
+    $collator = new Collator('de_DE');
+    $collator->setAttribute(Collator::CASE_FIRST, Collator::LOWER_FIRST);
+    $collator->sort($array);
+            </code></pre>
+
+                Collator::sort = a,A,ä,g,j,ß,z
+            </div>
+        </section>
+
+
+<!-- transliterator -->
+
+        <section>
+            <h3>Transliterator</h3>
+        </section>
+
+        <section>
+            <h3>How to spell it</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $trans = Transliterator::create('Any-Latin');
+    echo $trans->transliterate('こんにちは');
+            </code></pre>
+
+                kon'nichiha
+            </div>
+        </section>
+
+        <section>
+            <h3>Transliterator</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    var_dump(Transliterator::listIDs());
+            </code></pre>
+
+                array(286) {
+                [0]=>
+                string(11) "ASCII-Latin"
+                [1]=>
+                string(11) "Latin-Arabic"
+                ...
+            </div>
+        </section>
+
+<!-- ResourceBundle -->
+
+        <section>
+            <h3>ResourceBundle</h3>
+        </section>
+
+        <section>
+            <h3>Custom Resources</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    // returns null on error on PHP < 7.0
+    $curr = new ResourceBundle('it', __DIR__ . '/resources');
+
+    // get old german currency
+    $demCurrency = $curr->get('Currencies')
+        ->get('DEM');
+
+    echo $demCurrency->get(0) . PHP_EOL;
+    echo $demCurrency->get(1) . PHP_EOL;
+            </code></pre>
+                <aside class="notes">
+                    Third param: Allow fallback to parent locale
+                </aside>
+
+                DEM<br>
+                Marco Tedesco
+            </div>
+        </section>
+
+        <section>
+            <h3>Custom Ressources - it.txt</h3>
+            <h5><a href="http://bugs.icu-project.org/trac/browser/icu/trunk/source/data">ICU Data</a></h5>
+
+            <pre>
+it{
+    Currencies{
+        ADP{
+            "ADP",
+            "Peseta Andorrana",
+        }
+        ....
+        DEM{
+            "DEM",
+            "Marco Tedesco",
+        }
+            </pre>
+        </section>
+
+        <section>
+            <h3>Convert Ressources for ResourceBundle</h3>
+
+            <pre><code class="bash">
+    genrb -d /path/to/resources/currency/ it.txt
+            </code></pre>
+
+            Created resource: it.res
+        </section>
+
+        <section>
+            <h3>genrb</h3>
+
+            <a href="http://linux.die.net/man/1/genrb">http://linux.die.net/man/1/genrb</a><br>
+        </section>
+
+<!-- IntlChar -->
+
+        <section>
+            <h3>IntlChar</h3>
+        </section>
+
+        <section>
+            <h3>Characters</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    echo IntlChar::toupper('ä');
+    echo IntlChar::tolower('Č');
+    echo IntlChar::chr(9730);
+            </code></pre>
+
+                Ä<br>
+                č<br>
+                ☂<br>
+            </div>
+        </section>
+
+        <section>
+            <h3>Characters</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    var_dump(IntlChar::isUUppercase('A'));
+    var_dump(IntlChar::isULowercase('A'));
+    var_dump(IntlChar::isdigit(3));
+    var_dump(IntlChar::isdigit('3'));
+    var_dump(IntlChar::isspace(' '));
+            </code></pre>
+
+                true<br>
+                false<br>
+                false<br>
+                true<br>
+                true
+            </div>
+        </section>
+
+        <section>
+            <h3>Character name</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    echo IntlChar::charName('Ü');
+            </code></pre>
+
+                LATIN CAPITAL LETTER U WITH DIAERESIS
+            </div>
+        </section>
+
+        <section>
+            <h3>Exception on errors</h3>
+        </section>
+
+        <section>
+            <h3>IntlException instead errors</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    // Exists since PHP 5.5 for php.ini
+    ini_set('intl.use_exceptions', true);
+
+    try {
+        $curr = new ResourceBundle('IDontExist', __DIR__);
+    } catch (IntlException $e) {
+        echo $e->getMessage();
+    }
+            </code></pre>
+
+                resourcebundle_ctor: Cannot load libICU resource bundle
+            </div>
+        </section>
+
+        <section>
+            <img src="images/keep-calm.png">
+            <br>and Intl
+        </section>
+
+        <section class="center">
+            <h2>Thank you</h2>
+            <div>
+                Claudio Zizza<br>
+                <a target="_blank" href="http://php.budgegeria.de">php.budgegeria.de</a><br>
+                <a target="_blank" href="https://twitter.com/senseexception">@SenseException</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script src="bower_components/reveal-js/js/reveal.min.js"></script>
+<script type="application/javascript">
+    Reveal.initialize({
+
+        center: true,
+
+        width: 1200,
+        height: 800,
+
+        minScale: 1.0,
+        maxScale: 10.0,
+
+        rollingLinks: true,
+        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+//        dependencies: [
+//            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+//        ]
+    });
+</script>
+<script type="text/javascript" src="bower_components/reveal-js/plugin/highlight/highlight.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
