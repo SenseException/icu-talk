@@ -17,11 +17,16 @@
         </section>
 
         <section>
+            <img src="images/profile.jpg" alt="Claudio" style="float: right" width="300" height="384">
+            <div style="text-align: left">
             Claudio Zizza<br><br>
             Developer Developer Developer<br>
             (Currently PHP)<br><br>
+            Co-Organizer PHP Usergroup Karlsruhe<br><br>
+            Part of Podcast: <a target="_blank" href="http://phpdevradio.de">phpdevradio.de</a><br>
             PHP Snippets: <a target="_blank" href="http://php.budgegeria.de">php.budgegeria.de</a><br><br>
             Twitter: <a target="_blank" href="https://twitter.com/senseexception">@SenseException</a>
+            </div>
         </section>
 
         <section data-background="images/map.jpg">
@@ -38,7 +43,7 @@
 
         <section>
             <h2>Mars Climate Orbiter</h2>
-            <img src="images/mars-climate-orbiter.jpg" height="600">
+            <img src="images/mars-climate-orbiter.jpg" alt="Mars Climate Orbiter" height="600">
             <aside class="notes">
                 Satelliten und Orbitmissionen billiger und effizienter machen<br>
                 Die Sonde sollte sich Mars bis auf 160 km nähern und dann ihre Triebwerke zünden<br>
@@ -48,7 +53,7 @@
         </section>
 
         <section>
-            <img src="images/shopware.png" width="982" height="580">
+            <img src="images/shopware.png"  alt="Importance of Intl for developers" width="982" height="580">
             <aside class="notes">
                 Communication is also important for devs.
                 Wrong format/communication looks less believable or can result in misunderstandings.
@@ -57,7 +62,7 @@
 
         <section>
             <h2>Date representation</h2>
-            <img src="images/what.jpg" style="float: right" class="fragment fade-in">
+            <img src="images/what.jpg" alt="What?" style="float: right" class="fragment fade-in">
             <div style="padding: 20px; margin-top: 90px">es_ES: 21/4/16</div>
             <div style="padding: 20px">en_US: 4/21/16</div>
         </section>
@@ -74,7 +79,7 @@
                 <li class="fragment fade-in">Unicode and Globalization support (C/C++/Java)</li>
                 <li class="fragment fade-in">Released in 1999</li>
                 <li class="fragment fade-in">Sponsored by IBM and others</li>
-                <li class="fragment fade-in">Current version: ICU 57.1</li>
+                <li class="fragment fade-in">Current version: ICU 59.1</li>
             </ul>
         </section>
 
@@ -86,6 +91,16 @@
 
         <section>
             <h3>NumberFormatter</h3>
+        </section>
+
+        <section>
+            <h4>1.000,45</h4>
+
+            <h4>1'000.45</h4>
+
+            <h4>1,000.45</h4>
+
+            <h4>1 000,45</h4>
         </section>
 
         <section>
@@ -127,6 +142,18 @@
 
         <section>
             <h3>IntlDateFormatter</h3>
+        </section>
+
+        <section>
+            <h4>August 18, 2017 at 7:00 PM</h4>
+
+            <h4>8/18/17</h4>
+
+            <h4>Aug 18, 2017, 7:00:23 PM GMT</h4>
+
+            <h4>7:00:23 PM</h4>
+            <br><br>
+            <h4>18 августа 2017 г., 19:01</h4>
         </section>
 
         <section>
@@ -172,7 +199,7 @@
         </section>
 
         <section>
-            <h3>Formatter whole messages</h3>
+            <h3>Formats whole messages</h3>
 
             <div><pre><code class="php">
     &lt;?php
@@ -180,11 +207,11 @@
     $text = 'Am {dateval,date,full} waren es {visitor,number,integer} Besucher.';
 
     $msgDe = new MessageFormatter('de_DE', $text);
-    $msgCh = new MessageFormatter('de_Ch', $text);
+    $msgCh = new MessageFormatter('de_CH', $text);
 
     $args = array(
-    'visitor' => 1240000,
-    'dateval' => new DateTime(),
+        'visitor' => 1240000,
+        'dateval' => new DateTime(),
     );
 
     echo $msgDe->format($args);
@@ -285,10 +312,26 @@
         </section>
 
         <section>
+            <pre><code class="php">
+    &lt;?php
+
+    $calendar = IntlCalendar::createInstance('Europe/Berlin', 'de_DE');
+
+    while (false === $calendar->isWeekend()) {
+        echo 'All work and no play makes me a dull dev. ';
+
+        $calendar->setTime(IntlCalendar::getNow());
+    }
+
+    echo 'Yay.';
+            </code></pre>
+        </section>
+
+        <section>
             <h3>Build a Calendar</h3>
 
-            <table class="calendar"><caption>April</caption><tr><td>Mo.</td><td>Di.</td><td>Mi.</td><td>Do.</td><td>Fr.</td><td>Sa.</td><td>So.</td></tr><tr><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">31</td><td align="right">1</td><td align="right">2</td><td align="right">3</td></tr><tr><td align="right">4</td><td align="right">5</td><td align="right">6</td><td align="right">7</td><td align="right">8</td><td align="right">9</td><td align="right">10</td></tr><tr><td align="right">11</td><td align="right">12</td><td align="right">13</td><td align="right">14</td><td align="right">15</td><td align="right">16</td><td align="right">17</td></tr><tr><td align="right">18</td><td align="right">19</td><td align="right">20</td><td align="right">21</td><td align="right">22</td><td align="right">23</td><td align="right">24</td></tr><tr><td align="right">25</td><td align="right">26</td><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">1</td></tr></table>
-            <table class="calendar"><caption>April</caption><tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr><tr><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">31</td><td align="right">1</td><td align="right">2</td></tr><tr><td align="right">3</td><td align="right">4</td><td align="right">5</td><td align="right">6</td><td align="right">7</td><td align="right">8</td><td align="right">9</td></tr><tr><td align="right">10</td><td align="right">11</td><td align="right">12</td><td align="right">13</td><td align="right">14</td><td align="right">15</td><td align="right">16</td></tr><tr><td align="right">17</td><td align="right">18</td><td align="right">19</td><td align="right">20</td><td align="right">21</td><td align="right">22</td><td align="right">23</td></tr><tr><td align="right">24</td><td align="right">25</td><td align="right">26</td><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td></tr></table>
+            <table class="calendar"><caption>April 2016</caption><tr><td>Mo.</td><td>Di.</td><td>Mi.</td><td>Do.</td><td>Fr.</td><td>Sa.</td><td>So.</td></tr><tr><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">31</td><td align="right">1</td><td align="right">2</td><td align="right">3</td></tr><tr><td align="right">4</td><td align="right">5</td><td align="right">6</td><td align="right">7</td><td align="right">8</td><td align="right">9</td><td align="right">10</td></tr><tr><td align="right">11</td><td align="right">12</td><td align="right">13</td><td align="right">14</td><td align="right">15</td><td align="right">16</td><td align="right">17</td></tr><tr><td align="right">18</td><td align="right">19</td><td align="right">20</td><td align="right">21</td><td align="right">22</td><td align="right">23</td><td align="right">24</td></tr><tr><td align="right">25</td><td align="right">26</td><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">1</td></tr></table>
+            <table class="calendar"><caption>April 2016</caption><tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr><tr><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td><td align="right">31</td><td align="right">1</td><td align="right">2</td></tr><tr><td align="right">3</td><td align="right">4</td><td align="right">5</td><td align="right">6</td><td align="right">7</td><td align="right">8</td><td align="right">9</td></tr><tr><td align="right">10</td><td align="right">11</td><td align="right">12</td><td align="right">13</td><td align="right">14</td><td align="right">15</td><td align="right">16</td></tr><tr><td align="right">17</td><td align="right">18</td><td align="right">19</td><td align="right">20</td><td align="right">21</td><td align="right">22</td><td align="right">23</td></tr><tr><td align="right">24</td><td align="right">25</td><td align="right">26</td><td align="right">27</td><td align="right">28</td><td align="right">29</td><td align="right">30</td></tr></table>
         </section>
 
 <!-- IntlTimeZone -->
@@ -390,6 +433,11 @@
         </section>
 
         <section>
+            <h3>'lol' === 'IoI'</h3>
+            <div class="fragment fade-in">// false</div>
+        </section>
+
+        <section>
             <h3>Can I misread it?</h3>
 
             <div><pre><code class="php">
@@ -434,10 +482,6 @@
                 corazón<br>
                 corazón
             </div>
-        </section>
-
-        <section>
-            <h2>"Hochdörfer" won't be a problem anymore</h2>
         </section>
 
 <!-- IntlBreakIterator -->
@@ -583,7 +627,6 @@
 
         <section>
             <h3>Custom Ressources - it.txt</h3>
-            <h5><a href="http://bugs.icu-project.org/trac/browser/icu/trunk/source/data">ICU Data</a></h5>
 
             <pre>
 it{
@@ -698,6 +741,44 @@ it{
         </section>
 
         <section>
+            <h3>So much code...</h3>
+            <img src="images/bubu.jpg" width="1000" height="594" alt="Still awake?">
+        </section>
+
+        <section>
+            <h3>Intl-Format</h3>
+            https://github.com/SenseException/intl-format
+        </section>
+
+        <section>
+            <h3>Similar to sprintf</h3>
+
+            <div><pre><code class="php">
+    &lt;?php
+
+    $intlFormat = (new Budgegeria\IntlFormat\Factory())->createIntlFormat('en_US');
+
+    $date = new DateTime();
+    $number = 1002.25;
+
+    echo $intlFormat->format('At %time_short the value was %number', $date, $number);
+            </code></pre>
+                At 5:30 AM the value was 1,002.25
+            </div>
+        </section>
+
+        <section>
+            <h2>Available formats in Intl-Format</h2>
+            <ul>
+                <li>Numbers</li>
+                <li>Date and time</li>
+                <li>Timezone</li>
+                <li>Locale</li>
+                <li>Custom types by you</li>
+            </ul>
+        </section>
+
+        <section>
             <img src="images/keep-calm.png">
             <br>and Intl
         </section>
@@ -706,7 +787,6 @@ it{
             <h2>Thank you</h2>
             <div>
                 Claudio Zizza<br>
-                <a target="_blank" href="http://php.budgegeria.de">php.budgegeria.de</a><br>
                 <a target="_blank" href="https://twitter.com/senseexception">@SenseException</a>
             </div>
         </section>
@@ -727,11 +807,8 @@ it{
         maxScale: 10.0,
 
         rollingLinks: true,
-        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+        transition: 'linear' // default/cube/page/concave/zoom/linear/fade/none
 
-//        dependencies: [
-//            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-//        ]
     });
 </script>
 <script type="text/javascript" src="bower_components/reveal-js/plugin/highlight/highlight.js"></script>
