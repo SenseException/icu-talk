@@ -1,6 +1,5 @@
-.reveal .intro-footer {
-    font-size: 0.7em;
-    margin-top: 40%;
+.reveal {
+    font-size: 2.0em;
 }
 
 div .source {
@@ -27,7 +26,7 @@ div .source {
 }
 
 .reveal section table td {
-    border: 1px solid #999;
+    border: 1px solid #999!important;
     padding: 7px;
 }
 
@@ -36,6 +35,11 @@ div .source {
     background-color: #ffffff;
     opacity: 0.8;
     border-radius: 20px;
+}
+
+.reveal section pre code {
+    font-size: 1.3em;
+    line-height: normal;
 }
 
 .reveal h3 {
