@@ -3,11 +3,11 @@
 <head>
     <title>International Components for Unicode</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="bower_components/reveal-js/css/reveal.css">
-    <link rel="stylesheet" href="bower_components/reveal-js/css/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/theme/simple.css" id="theme">
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="bower_components/reveal-js/lib/css/zenburn.css">
-    <link rel="stylesheet" media="print" href="bower_components/reveal-js/css/print/pdf.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+    <link rel="stylesheet" media="print" href="node_modules/reveal.js/css/print/pdf.css">
 </head>
 <body>
 <div class="reveal">
@@ -129,10 +129,10 @@
             <h3>Parser</h3>
 
             <div><pre><code class="php">
-                &lt;?php
+    &lt;?php
 
-                $numberFormatter = new NumberFormatter('de_CH', NumberFormatter::DECIMAL);
-                echo $numberFormatter->parse('1\'000.45');
+    $numberFormatter = new NumberFormatter('de_CH', NumberFormatter::DECIMAL);
+    echo $numberFormatter->parse('1\'000.45');
             </code></pre>
 
                 1000.45
@@ -795,7 +795,7 @@ it{
 </div>
 
 
-<script src="bower_components/reveal-js/js/reveal.min.js"></script>
+<script src="node_modules/reveal.js/js/reveal.js"></script>
 <script type="application/javascript">
     Reveal.initialize({
 
@@ -812,7 +812,7 @@ it{
 
     });
 </script>
-<script type="text/javascript" src="bower_components/reveal-js/plugin/highlight/highlight.js"></script>
+<script type="text/javascript" src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
 <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
