@@ -17,13 +17,11 @@
         </section>
 
         <section>
-            <img src="images/profile.jpg" alt="Claudio" style="float: right" width="300" height="384">
             <div style="text-align: left">
             Claudio Zizza<br><br>
             Developer Developer Developer<br>
             (Currently PHP)<br><br>
             Co-Organizer PHP Usergroup Karlsruhe<br><br>
-            Part of <a target="_blank" href="http://phpdevradio.de">phpdevradio.de</a><br>
             Part of Doctrine-Team: <a target="_blank" href="https://www.doctrine-project.org">doctrine-project.org</a><br>
             PHP Snippets: <a target="_blank" href="http://php.budgegeria.de">php.budgegeria.de</a><br><br>
             Twitter: <a target="_blank" href="https://twitter.com/senseexception">@SenseException</a>
@@ -80,7 +78,7 @@
                 <li class="fragment fade-in">Unicode and Globalization support (C/C++/Java)</li>
                 <li class="fragment fade-in">Released in 1999</li>
                 <li class="fragment fade-in">Sponsored by IBM and others</li>
-                <li class="fragment fade-in">Current version: ICU 61.1</li>
+                <li class="fragment fade-in">Current version: ICU 66</li>
             </ul>
         </section>
 
@@ -796,9 +794,14 @@ it{
 
 
 <script src="node_modules/reveal.js/js/reveal.js"></script>
+<script src="node_modules/reveal.js/lib/js/head.min.js"></script>
+<script type="text/javascript" src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
 <script type="application/javascript">
     Reveal.initialize({
 
+        dependencies: [
+            { src: 'node_modules/reveal.js/plugin/notes/notes.js', async: true }
+        ],
         center: true,
 
         width: 1200,
@@ -812,7 +815,6 @@ it{
 
     });
 </script>
-<script type="text/javascript" src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
 <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
